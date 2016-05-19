@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme">
         <activity
-            android:name=".control.activity.LoginActivity"
+            android:name=".control.ui.activity.LoginActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,13 +27,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".control.activity.MainActivity" />
+        <activity android:name=".control.ui.activity.MainActivity" />
 
-        <activity android:name=".control.activity.StreamingAcitivity" />
-        <activity android:name=".control.activity.StreamingScreenActivity" />
-        <activity android:name=".control.activity.StreamingCameraActivity" />
+        <activity android:name=".control.ui.activity.StreamingAcitivity" />
+        <activity android:name=".control.ui.activity.StreamingScreenActivity" />
+        <activity android:name=".control.ui.activity.StreamingCameraActivity" />
 
-        <service android:name=".core.api.service.APIService" />
+        <service android:name=".control.core.api.service.APIService" />
 
     </application>
 

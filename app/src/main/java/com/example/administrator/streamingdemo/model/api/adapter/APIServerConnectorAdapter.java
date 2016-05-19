@@ -2,13 +2,12 @@ package com.example.administrator.streamingdemo.model.api.adapter;
 
 import android.util.Log;
 
-import com.example.administrator.streamingdemo.core.api.network.APINetworkListener;
-import com.example.administrator.streamingdemo.model.BasicInfo;
+import com.example.administrator.streamingdemo.control.core.api.network.APINetworkListener;
 import com.example.administrator.streamingdemo.model.api.BaseAPI;
 import com.example.administrator.streamingdemo.model.api.POJO.AuthenticationResponse;
 import com.example.administrator.streamingdemo.model.api.POJO.BaseResponse;
 import com.example.administrator.streamingdemo.model.api.POJO.StreamInfoResponse;
-import com.example.administrator.streamingdemo.utils.Results;
+import com.example.administrator.streamingdemo.model.utils.Results;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;

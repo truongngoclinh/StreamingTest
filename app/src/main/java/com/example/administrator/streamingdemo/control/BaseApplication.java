@@ -8,7 +8,7 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.example.administrator.streamingdemo.core.api.service.APIService;
+import com.example.administrator.streamingdemo.control.core.api.service.APIService;
 
 /**
  * Created by linhtruong on 5/18/2016.
