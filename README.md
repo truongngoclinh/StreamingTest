@@ -6,9 +6,9 @@
 ### How it works
 #### Screen recording
 * Using MediaCodec as encoder
-* Encode H264 bitstream from encoder
+* Get H264 bitstream from encoder
 * Encode to flv, packet rtpm and send to server
 
 #### Rear camera
 * Using camera deprecated api
-* Using javacv
+* Using javacv: https://github.com/vanevery/JavaCV_0.3_stream_test
