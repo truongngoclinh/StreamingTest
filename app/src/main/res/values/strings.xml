@@ -2,4 +2,6 @@
     <string name="app_name">StreamingDemo</string>
     <string name="action_settings">Settings</string>
     <string name="loginProgress">Logging in...</string>
+    <string name="notificationTitle">Recording service</string>
+    <string name="notificationText">Tap to configure</string>
 </resources>

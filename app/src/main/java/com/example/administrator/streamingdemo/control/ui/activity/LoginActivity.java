@@ -111,15 +111,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.btnLogin:
+
+                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(i);
+
 //                authenticateThread.start();
-                mAPIService = BaseApplication.getInstance().getService();
+              /*  mAPIService = BaseApplication.getInstance().getService();
                 String email = mEdtUsername.getText().toString();
                 String password = mEdtPassword.getText().toString();
                 if (Utils.isStringHasText(email) && Utils.isStringHasText(password)) {
                     mAPIService.authenticate(mEdtUsername.getText().toString(), mEdtPassword.getText().toString());
                 } else {
                     Snackbar.make(findViewById(R.id.contentLayout), "Wrong email or password!", Snackbar.LENGTH_LONG).show();
-                }
+                }*/
                 break;
         }
     }

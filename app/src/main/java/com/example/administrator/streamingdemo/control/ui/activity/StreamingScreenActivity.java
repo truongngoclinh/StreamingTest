@@ -1,6 +1,7 @@
 package com.example.administrator.streamingdemo.control.ui.activity;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.media.projection.MediaProjection;
 import android.media.projection.MediaProjectionManager;
@@ -15,6 +16,7 @@ import android.widget.Button;
 
 import com.example.administrator.streamingdemo.R;
 import com.example.administrator.streamingdemo.control.core.encoder.ScreenRecorder;
+import com.example.administrator.streamingdemo.control.core.service.HeadViewService;
 
 import java.io.File;
 
@@ -23,24 +25,28 @@ import java.io.File;
  * Make front camera like chat head
  * Using outputBuffer of MediaCodec (H264 bitstream)
  * Encode bitstream to flv, packet rtmp and send to server
- * */
+ */
 public class StreamingScreenActivity extends AppCompatActivity implements View.OnClickListener {
+
     private static final int REQUEST_CODE = 1;
     private MediaProjectionManager mMediaProjectionManager;
     private ScreenRecorder mRecorder;
-    private Button mButtonRecording, mButtonStreaming, mButtonExtracting;
+    private Button mBtnRecording, mBtnStreaming, mBtnShowFrontCamera;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_streaming_screen);
-        mButtonRecording = (Button) findViewById(R.id.button);
-        mButtonStreaming = (Button) findViewById(R.id.btnStreaming);
-        mButtonExtracting = (Button) findViewById(R.id.btnExtracting);
+        mContext = this;
 
-        mButtonRecording.setOnClickListener(this);
-        mButtonExtracting.setOnClickListener(this);
-        mButtonStreaming.setOnClickListener(this);
+        mBtnRecording = (Button) findViewById(R.id.button);
+        mBtnStreaming = (Button) findViewById(R.id.btnStreaming);
+        mBtnShowFrontCamera = (Button) findViewById(R.id.btnShowFrontCamera);
+
+        mBtnRecording.setOnClickListener(this);
+        mBtnShowFrontCamera.setOnClickListener(this);
+        mBtnStreaming.setOnClickListener(this);
 
         mMediaProjectionManager = (MediaProjectionManager) getSystemService(MEDIA_PROJECTION_SERVICE);
     }
@@ -72,22 +78,29 @@ public class StreamingScreenActivity extends AppCompatActivity implements View.O
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button:
-                if (mButtonRecording.getText().equals("Stop")) {
+                if (mBtnRecording.getText().equals("Stop")) {
                     if (mRecorder != null) {
                         mRecorder.quit();
                         mRecorder = null;
                     }
-                    mButtonRecording.setText("Start");
+                    mBtnRecording.setText("Start");
                 } else {
-                    mButtonRecording.setText("Stop");
+                    mBtnRecording.setText("Stop");
                     Intent captureIntent = mMediaProjectionManager.createScreenCaptureIntent();
                     startActivityForResult(captureIntent, REQUEST_CODE);
                 }
                 break;
             case R.id.btnStreaming:
                 break;
-            case R.id.btnExtracting:
-
+            case R.id.btnShowFrontCamera:
+                if (mBtnShowFrontCamera.getText().equals("Start front camera")) {
+                    startHeadViewService();
+                    mBtnShowFrontCamera.setText("Hide front camera");
+                    finish();
+                } else {
+                    stopHeadViewService();
+                    mBtnShowFrontCamera.setText("Start front camera");
+                }
                 break;
         }
     }
@@ -99,5 +112,13 @@ public class StreamingScreenActivity extends AppCompatActivity implements View.O
             mRecorder.quit();
             mRecorder = null;
         }
+    }
+
+    private void startHeadViewService() {
+        mContext.startService(new Intent(mContext, HeadViewService.class));
+    }
+
+    private void stopHeadViewService() {
+        mContext.stopService(new Intent(mContext, HeadViewService.class));
     }
 }

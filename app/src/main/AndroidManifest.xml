@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CAMERA" />
-
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".control.BaseApplication"
@@ -34,6 +34,7 @@
         <activity android:name=".control.ui.activity.StreamingCameraActivity" />
 
         <service android:name=".control.core.api.service.APIService" />
+        <service android:name=".control.core.service.HeadViewService" />
 
     </application>
 
