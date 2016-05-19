@@ -6,10 +6,10 @@ Streaming demo
 * Streaming screen with front camera
 
 **How it works**
-*Screen recording*
+**Screen recording**
 * Using MediaCodec as encoder
 * Encode H264 bitstream from encoder
 * Encode to flv, packet rtpm and send to server.
-*Rear camera*
+**Rear camera**
 *Using camera deprecated api
 *Using javacv
