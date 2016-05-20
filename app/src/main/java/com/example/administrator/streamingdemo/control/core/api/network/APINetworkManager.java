@@ -26,8 +26,13 @@ public class APINetworkManager {
         return Results.SUCCESS;
     }
 
-    public int startStream(String title, String description, int isArchiving, int isMakeArchieve, int isLiveChat, int restriction) {
-        mAPIAdapter.startStream(title, description, isArchiving, isMakeArchieve, isLiveChat, restriction, mAPINetworkListener);
+    public int startStream(String apiToken, String title, String description, int isArchiving, int isMakeArchieve, int isLiveChat, int restriction) {
+        mAPIAdapter.startStream(apiToken, title, description, isArchiving, isMakeArchieve, isLiveChat, restriction, mAPINetworkListener);
+        return Results.SUCCESS;
+    }
+
+    public int stopStream(String apiToken) {
+        mAPIAdapter.stopStream(apiToken, mAPINetworkListener);
         return Results.SUCCESS;
     }
 }

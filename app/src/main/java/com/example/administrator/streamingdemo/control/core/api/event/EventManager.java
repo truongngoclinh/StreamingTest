@@ -76,6 +76,20 @@ public class EventManager {
         sendEvent(event);
     }
 
+    public void sendEventStopStreamStarted(int resultCode) {
+        BaseEvent event = new BaseEvent();
+        event.setEventType(EventType.STOP_STREAMING_STARTED);
+        event.setResultCode(resultCode);
+        sendEvent(event);
+    }
+
+    public void sendEventStopStreamFinished(int resultCode) {
+        BaseEvent event = new BaseEvent();
+        event.setEventType(EventType.STOP_STREAMING_FINISHED);
+        event.setResultCode(resultCode);
+        sendEvent(event);
+    }
+
     private void sendEvent(BaseEvent event) {
         mEventBus.post(event);
     }

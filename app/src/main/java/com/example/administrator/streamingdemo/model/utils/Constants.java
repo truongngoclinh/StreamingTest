@@ -22,4 +22,8 @@ public class Constants {
 
     public final static int MESSAGE_START_MORE_SETTING_DIALOG = 2000;
     public final static int MESSAGE_START_SETTING_DIALOG = 2001;
+
+    public final static String PREFS_KEY = "streaming_demo_sp_key";
+    public final static String KEY_FRONT_CAMERA_RUNNING = "front_camera_is_running";
+
 }

@@ -36,12 +36,14 @@ public interface BaseAPI {
      */
     @FormUrlEncoded
     @POST("start")
-    Call<BaseResponse> startStream(@Field("name") String title,
-                                   @Field("description") String description,
-                                   @Field("archiving") int isArchiving,
-                                   @Field("make_archive") int isMakeArchive,
-                                   @Field("live_chat") int isLiveChat,
-                                   @Field("restriction") int restriction);
+    Call<BaseResponse> startStream(
+            @Field("api_token") String apiToken,
+            @Field("name") String title,
+            @Field("description") String description,
+            @Field("archiving") int isArchiving,
+            @Field("make_archive") int isMakeArchive,
+            @Field("live_chat") int isLiveChat,
+            @Field("restriction") int restriction);
 
 
     /**

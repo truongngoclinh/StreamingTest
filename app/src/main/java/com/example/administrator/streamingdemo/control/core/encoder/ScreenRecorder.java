@@ -42,9 +42,11 @@ public class ScreenRecorder extends Thread {
 
     // encoder config
     private static final String MIME_TYPE = "video/avc"; // H.264 Advanced Video Coding
-    private static final int FRAME_RATE = 30; // 30 fps
+    private static final int FRAME_RATE = 60; // 60 fps
     private static final int IFRAME_INTERVAL = 10; // 10 seconds between I-frames
     private static final int TIMEOUT_US = 10000;
+
+    private H264ToFLV h264ToFLV;
 
     private int mVideoTrackIndex = -1;
     private AtomicBoolean mQuit = new AtomicBoolean(false);
@@ -58,6 +60,7 @@ public class ScreenRecorder extends Thread {
         mMediaProjection = mp;
         mDstPath = dstPath;
         mBufferInfo = new MediaCodec.BufferInfo();
+        h264ToFLV = new H264ToFLV();
     }
 
     /**
@@ -122,6 +125,7 @@ public class ScreenRecorder extends Thread {
                 mEncoder.releaseOutputBuffer(index, false);
             }
         }
+        h264ToFLV.release();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -142,11 +146,12 @@ public class ScreenRecorder extends Thread {
             }
 
             Log.d(TAG, "get all data");
-            try {
+            h264ToFLV.readInput(outData);
+            /*try {
                 output.write(outData, 0, outData.length);
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
     }
 

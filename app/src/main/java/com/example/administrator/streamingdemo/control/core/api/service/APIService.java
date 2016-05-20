@@ -60,8 +60,13 @@ public class APIService extends Service {
         mAPIController.getStreamInfo(apiToken);
     }
 
-    public void startStream(String title, String description, int isArchiving, int isMakeArchieve, int isLiveChat, int restriction) {
+    public void startStream(String apiToken, String title, String description, int isArchiving, int isMakeArchieve, int isLiveChat, int restriction) {
         Log.d(TAG, "startStream()");
-        mAPIController.startStream(title, description, isArchiving, isMakeArchieve, isLiveChat, restriction);
+        mAPIController.startStream(apiToken, title, description, isArchiving, isMakeArchieve, isLiveChat, restriction);
+    }
+
+    public void stopStream(String apiToken) {
+        Log.d(TAG, "stopStream()");
+        mAPIController.stopStream(apiToken);
     }
 }

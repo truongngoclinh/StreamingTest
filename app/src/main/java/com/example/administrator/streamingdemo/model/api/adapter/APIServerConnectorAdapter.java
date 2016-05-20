@@ -42,7 +42,7 @@ public class APIServerConnectorAdapter {
 
     /**
      * set header
-     * */
+     */
     public OkHttpClient getRequestHeader() {
         OkHttpClient httpClient = new OkHttpClient();
         httpClient.setConnectTimeout(20, TimeUnit.SECONDS);
@@ -103,9 +103,9 @@ public class APIServerConnectorAdapter {
         }
     }
 
-    public void startStream(String title, String description, int isArchiving, int isMakeArchieve, int isLiveChat, int restriction, final APINetworkListener listener) {
+    public void startStream(String apiToken, String title, String description, int isArchiving, int isMakeArchieve, int isLiveChat, int restriction, final APINetworkListener listener) {
         try {
-            Call<BaseResponse> call = mAPI.startStream(title, description, isArchiving, isMakeArchieve, isLiveChat, restriction);
+            Call<BaseResponse> call = mAPI.startStream(apiToken, title, description, isArchiving, isMakeArchieve, isLiveChat, restriction);
             call.enqueue(new Callback<BaseResponse>() {
                 @Override
                 public void onResponse(retrofit.Response<BaseResponse> response, Retrofit retrofit) {
@@ -123,6 +123,29 @@ public class APIServerConnectorAdapter {
         } catch (Exception e) {
             e.printStackTrace();
             listener.onStartStreamFinished(Results.ERROR, null);
+        }
+    }
+
+    public void stopStream(String apiToken, final APINetworkListener listener) {
+        try {
+            Call<BaseResponse> call = mAPI.stopStream(apiToken);
+            call.enqueue(new Callback<BaseResponse>() {
+                @Override
+                public void onResponse(retrofit.Response<BaseResponse> response, Retrofit retrofit) {
+                    Log.d(TAG, "startStream: response = " + response.body());
+                    listener.onStopStreamFinished(Results.SUCCESS, response.body());
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    Log.d(TAG, "startStream: failed = " + t.getMessage());
+                    listener.onStopStreamFinished(Results.ERROR, null);
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            listener.onStopStreamFinished(Results.ERROR, null);
         }
     }
 

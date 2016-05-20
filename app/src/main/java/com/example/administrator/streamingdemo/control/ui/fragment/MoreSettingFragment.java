@@ -98,16 +98,18 @@ public class MoreSettingFragment extends DialogFragment implements CompoundButto
             case R.id.btnOk:
                 BasicInfo basicInfo = BasicInfo.getInstance();
                 StreamSettingInfo info = basicInfo.getStreamInfo();
-                info.setArchiving(mChkArchiving.isChecked());
-                info.setMakeArhieve(mChkMakeArchive.isChecked());
-                info.setLiveChat(mChkLiveChat.isChecked());
-                info.setRestriction(mChkRestriction.isChecked());
+                info.setIsArchiving(mChkArchiving.isChecked() ? 1 : 0);
+                info.setIsMakeArhieve(mChkMakeArchive.isChecked() ? 1 : 0);
+                info.setIsLiveChat(mChkLiveChat.isChecked() ? 1 : 0);
+                info.setRestriction(mChkRestriction.isChecked() ? 1 : 0);
 
                 if (info.getType() == Constants.STREAM_TYPE_CAMERA) {
                     Intent i = new Intent(getActivity(), StreamingCameraActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
                 } else if (info.getType() == Constants.STREAM_TYPE_SCREEN) {
                     Intent i = new Intent(getActivity(), StreamingScreenActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
              /*       final Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
                     mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -115,6 +117,5 @@ public class MoreSettingFragment extends DialogFragment implements CompoundButto
                 }
                 break;
         }
-
     }
 }

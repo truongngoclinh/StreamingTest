@@ -42,9 +42,9 @@ public class HeadViewService extends Service {
     @Override
     public void onDestroy() {
         Toast.makeText(this, "Service stopped", Toast.LENGTH_LONG).show();
+        stopForeground(true);
         mFrontCameraView.destroy();
         mFrontCameraView = null;
-        stopForeground(true);
     }
 
     private PendingIntent createPendingIntent() {

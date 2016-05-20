@@ -56,18 +56,28 @@ public class APIController implements APINetworkListener {
         doTask(task);
     }
 
-    public void startStream(final String title, final String description, final int isArchiving, final int isMakeArchieve, final int isLiveChat,
+    public void startStream(final String apiToken, final String title, final String description, final int isArchiving, final int isMakeArchieve, final int isLiveChat,
                             final int restriction) {
         Runnable task = new Runnable() {
             @Override
             public void run() {
-                int result = mAPINetworkManager.startStream(title, description, isArchiving, isMakeArchieve, isLiveChat, restriction);
-                mEventManager.sendEventAuthenticateStarted(result);
+                int result = mAPINetworkManager.startStream(apiToken, title, description, isArchiving, isMakeArchieve, isLiveChat, restriction);
+                mEventManager.sendEventStartStreamStarted(result);
             }
         };
         doTask(task);
     }
 
+    public void stopStream(final String apiToken) {
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                int result = mAPINetworkManager.stopStream(apiToken);
+                mEventManager.sendEventStopStreamStarted(result);
+            }
+        };
+        doTask(task);
+    }
 
     @Override
     public void onGetAuthenticationFinished(final int resultCode, final AuthenticationResponse authenticationResponse) {
@@ -97,6 +107,17 @@ public class APIController implements APINetworkListener {
             @Override
             public void run() {
                 mEventManager.sendEventStartStreamFinished(resultcode);
+            }
+        };
+        doTask(task);
+    }
+
+    @Override
+    public void onStopStreamFinished(final int resultcode, BaseResponse baseResponse) {
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                mEventManager.sendEventStopStreamFinished(resultcode);
             }
         };
         doTask(task);

@@ -29,9 +29,17 @@ import java.io.IOException;
 import java.nio.ShortBuffer;
 
 import com.example.administrator.streamingdemo.R;
+import com.example.administrator.streamingdemo.control.BaseApplication;
 import com.example.administrator.streamingdemo.model.BasicInfo;
+import com.example.administrator.streamingdemo.model.StreamSettingInfo;
+import com.example.administrator.streamingdemo.model.api.POJO.BaseResponse;
+import com.example.administrator.streamingdemo.model.api.event.BaseEvent;
+import com.example.administrator.streamingdemo.model.utils.EventType;
 import com.googlecode.javacv.FFmpegFrameRecorder;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import static com.googlecode.javacv.cpp.opencv_core.*;
 
@@ -59,7 +67,7 @@ public class StreamingCameraActivity extends Activity implements OnClickListener
     private int sampleAudioRateInHz = 44100;
     private int imageWidth = 640;
     private int imageHeight = 480;
-    private int frameRate = 30;
+    private int frameRate = 60;
 
     private Thread audioThread;
     volatile boolean runAudioThread = true;
@@ -86,6 +94,8 @@ public class StreamingCameraActivity extends Activity implements OnClickListener
 
         initLayout();
         initRecorder();
+
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -129,10 +139,11 @@ public class StreamingCameraActivity extends Activity implements OnClickListener
         mainLayout = (FrameLayout) this.findViewById(R.id.record_layout);
 //        recordButton = (Button) findViewById(R.id.recorder_control);
 
-        DisplayMetrics dp = new DisplayMetrics();
+ /*       DisplayMetrics dp = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dp);
         imageWidth = dp.widthPixels;
         imageHeight = dp.heightPixels;
+        Log.d(TAG, "w = " + imageWidth + " - h = " + imageHeight);*/
 
         cameraView = new CameraView(this);
         LinearLayout.LayoutParams layoutParam = new LinearLayout.LayoutParams(imageWidth, imageHeight);
@@ -141,7 +152,6 @@ public class StreamingCameraActivity extends Activity implements OnClickListener
         recordButton = new Button(this);
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
-        lp.bottomMargin = 100;
         recordButton.setLayoutParams(lp);
         mainLayout.addView(recordButton);
 
@@ -233,12 +243,33 @@ public class StreamingCameraActivity extends Activity implements OnClickListener
     public void onClick(View v) {
         if (!recording) {
             startRecording();
-            Log.w(TAG, "Start Button Pushed");
+            Log.d(TAG, "Start Button Pushed");
             recordButton.setText("Stop");
+            StreamSettingInfo info = BasicInfo.getInstance().getStreamInfo();
+            BaseApplication.getInstance().getService().startStream(BasicInfo.getInstance().getApitoken(), info.getTitle(), info.getDescription()
+                    , info.getIsArchiving(), info.getIsMakeArhieve(), info.getIsLiveChat(), info.getRestriction());
+            Log.d(TAG, info.getTitle() + " - " + info.getDescription() + " - " + info.getIsArchiving() +
+                    " - " + info.getIsMakeArhieve() + " - " + info.getIsLiveChat() + " - " + info.getRestriction());
         } else {
             stopRecording();
+            BaseApplication.getInstance().getService().stopStream(BasicInfo.getInstance().getApitoken());
             Log.w(TAG, "Stop Button Pushed");
             recordButton.setText("Start");
+        }
+    }
+
+    @Subscribe
+    public void onEvent(BaseEvent event) {
+        int id = event.getEventType();
+        switch (id) {
+            case EventType.START_STREAMING_STARTED:
+                Log.d(TAG, "START_STREAMING_STARTED");
+                break;
+
+            case EventType.START_STREAMING_FINISHED:
+                Log.d(TAG, "START_STREAMING_FINISHED ");
+
+                break;
         }
     }
 
@@ -329,7 +360,6 @@ public class StreamingCameraActivity extends Activity implements OnClickListener
             try {
                 camera.setPreviewDisplay(holder);
                 camera.setPreviewCallback(this);
-
                 Camera.Parameters currentParams = camera.getParameters();
                 Log.v(TAG, "Preview Framerate: " + currentParams.getPreviewFrameRate());
                 Log.v(TAG, "Preview imageWidth: " + currentParams.getPreviewSize().width + " imageHeight: " + currentParams.getPreviewSize().height);
@@ -337,17 +367,15 @@ public class StreamingCameraActivity extends Activity implements OnClickListener
                 // Use these values
                 imageWidth = currentParams.getPreviewSize().width;
                 imageHeight = currentParams.getPreviewSize().height;
-                frameRate = currentParams.getPreviewFrameRate();
+//                frameRate = currentParams.getPreviewFrameRate();
 
-                bitmap = Bitmap.createBitmap(imageWidth, imageHeight, Bitmap.Config.ALPHA_8);
+//                bitmap = Bitmap.createBitmap(imageWidth, imageHeight, Bitmap.Config.ALPHA_8);
 
 
-	        	/*
-                Log.v(TAG,"Creating previewBuffer size: " + imageWidth * imageHeight * ImageFormat.getBitsPerPixel(currentParams.getPreviewFormat())/8);
+            /*    Log.v(TAG,"Creating previewBuffer size: " + imageWidth * imageHeight * ImageFormat.getBitsPerPixel(currentParams.getPreviewFormat())/8);
 	        	previewBuffer = new byte[imageWidth * imageHeight * ImageFormat.getBitsPerPixel(currentParams.getPreviewFormat())/8];
 				camera.addCallbackBuffer(previewBuffer);
-	            camera.setPreviewCallbackWithBuffer(this);
-	        	*/
+	            camera.setPreviewCallbackWithBuffer(this);*/
 
                 camera.startPreview();
                 previewRunning = true;
@@ -392,8 +420,7 @@ public class StreamingCameraActivity extends Activity implements OnClickListener
             // Use these values
             imageWidth = currentParams.getPreviewSize().width;
             imageHeight = currentParams.getPreviewSize().height;
-            frameRate = currentParams.getPreviewFrameRate();
-
+//            frameRate = currentParams.getPreviewFrameRate();
             // Create the yuvIplimage if needed
             yuvIplimage = IplImage.create(imageWidth, imageHeight, IPL_DEPTH_8U, 2);
             //yuvIplimage = IplImage.create(imageWidth, imageHeight, IPL_DEPTH_32S, 2);

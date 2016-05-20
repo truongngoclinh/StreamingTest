@@ -112,18 +112,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             case R.id.btnLogin:
 
+           /*     // test no api
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(i);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);*/
 
 //                authenticateThread.start();
-              /*  mAPIService = BaseApplication.getInstance().getService();
+                mAPIService = BaseApplication.getInstance().getService();
                 String email = mEdtUsername.getText().toString();
                 String password = mEdtPassword.getText().toString();
                 if (Utils.isStringHasText(email) && Utils.isStringHasText(password)) {
                     mAPIService.authenticate(mEdtUsername.getText().toString(), mEdtPassword.getText().toString());
                 } else {
                     Snackbar.make(findViewById(R.id.contentLayout), "Wrong email or password!", Snackbar.LENGTH_LONG).show();
-                }*/
+                }
                 break;
         }
     }
@@ -183,5 +185,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mProgressDialog = null;
     }
 }

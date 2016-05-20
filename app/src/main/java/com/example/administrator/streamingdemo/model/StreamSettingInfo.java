@@ -12,45 +12,42 @@ public class StreamSettingInfo implements Serializable {
     private String title;
     private String description;
 
-
-    private boolean isArchiving;
-    private boolean isMakeArhieve;
-    private boolean isLiveChat;
-    private boolean restriction;
-
-    public boolean isArchiving() {
+    public int getIsArchiving() {
         return isArchiving;
     }
 
-    public void setArchiving(boolean archiving) {
-        isArchiving = archiving;
+    public void setIsArchiving(int isArchiving) {
+        this.isArchiving = isArchiving;
     }
 
-    public boolean isMakeArhieve() {
+    public int getIsMakeArhieve() {
         return isMakeArhieve;
     }
 
-    public void setMakeArhieve(boolean makeArhieve) {
-        isMakeArhieve = makeArhieve;
+    public void setIsMakeArhieve(int isMakeArhieve) {
+        this.isMakeArhieve = isMakeArhieve;
     }
 
-    public boolean isLiveChat() {
+    public int getIsLiveChat() {
         return isLiveChat;
     }
 
-    public void setLiveChat(boolean liveChat) {
-        isLiveChat = liveChat;
+    public void setIsLiveChat(int isLiveChat) {
+        this.isLiveChat = isLiveChat;
     }
 
-    public boolean isRestriction() {
+    public int getRestriction() {
         return restriction;
     }
 
-    public void setRestriction(boolean restriction) {
+    public void setRestriction(int restriction) {
         this.restriction = restriction;
     }
 
-
+    private int isArchiving;
+    private int isMakeArhieve;
+    private int isLiveChat;
+    private int restriction;
 
 
     public int getType() {

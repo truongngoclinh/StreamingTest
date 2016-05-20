@@ -14,4 +14,6 @@ public interface APINetworkListener {
     void onGetStreamInfoFinished(int resultCode, StreamInfoResponse streamInfoResponse);
 
     void onStartStreamFinished(int resultcode, BaseResponse baseResponse);
+
+    void onStopStreamFinished(int resultcode, BaseResponse baseResponse);
 }
