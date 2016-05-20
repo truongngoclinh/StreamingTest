@@ -112,9 +112,9 @@ public class StreamingScreenActivity extends AppCompatActivity implements View.O
                     mBtnRecording.setText("Start");
                 } else {
                     mBtnRecording.setText("Stop");
-                    StreamSettingInfo info = BasicInfo.getInstance().getStreamInfo();
+  /*                  StreamSettingInfo info = BasicInfo.getInstance().getStreamInfo();
                     BaseApplication.getInstance().getService().startStream(BasicInfo.getInstance().getApitoken(), info.getTitle(), info.getDescription()
-                            , info.getIsArchiving(), info.getIsMakeArhieve(), info.getIsLiveChat(), info.getRestriction());
+                            , info.getIsArchiving(), info.getIsMakeArhieve(), info.getIsLiveChat(), info.getRestriction());*/
 
                     Intent captureIntent = mMediaProjectionManager.createScreenCaptureIntent();
                     startActivityForResult(captureIntent, REQUEST_CODE);

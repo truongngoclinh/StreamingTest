@@ -32,6 +32,7 @@
         <activity android:name=".control.ui.activity.StreamingAcitivity" />
         <activity android:name=".control.ui.activity.StreamingScreenActivity" />
         <activity android:name=".control.ui.activity.StreamingCameraActivity" />
+        <activity android:name=".model.utils.lib.sea.StreamingCameraActivity2" />
 
         <service android:name=".control.core.api.service.APIService" />
         <service android:name=".control.core.service.HeadViewService" />

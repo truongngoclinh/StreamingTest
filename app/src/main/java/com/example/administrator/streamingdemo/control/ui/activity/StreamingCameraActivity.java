@@ -139,11 +139,11 @@ public class StreamingCameraActivity extends Activity implements OnClickListener
         mainLayout = (FrameLayout) this.findViewById(R.id.record_layout);
 //        recordButton = (Button) findViewById(R.id.recorder_control);
 
- /*       DisplayMetrics dp = new DisplayMetrics();
+        DisplayMetrics dp = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dp);
         imageWidth = dp.widthPixels;
         imageHeight = dp.heightPixels;
-        Log.d(TAG, "w = " + imageWidth + " - h = " + imageHeight);*/
+        Log.d(TAG, "w = " + imageWidth + " - h = " + imageHeight);
 
         cameraView = new CameraView(this);
         LinearLayout.LayoutParams layoutParam = new LinearLayout.LayoutParams(imageWidth, imageHeight);
@@ -202,6 +202,7 @@ public class StreamingCameraActivity extends Activity implements OnClickListener
             recording = true;
             startTime = System.currentTimeMillis();
             audioThread.start();
+
         } catch (FFmpegFrameRecorder.Exception e) {
             e.printStackTrace();
             Log.d(TAG, e.toString());
@@ -444,7 +445,7 @@ public class StreamingCameraActivity extends Activity implements OnClickListener
         public void onPreviewFrame(byte[] data, Camera camera) {
 
             if (yuvIplimage != null && recording) {
-                videoTimestamp = 1000 * (System.currentTimeMillis() - startTime);
+                videoTimestamp = 500 * (System.currentTimeMillis() - startTime);
 
                 Log.d(TAG, "lenght? + " + data.length);
                 // Put the camera preview frame right into the yuvIplimage object

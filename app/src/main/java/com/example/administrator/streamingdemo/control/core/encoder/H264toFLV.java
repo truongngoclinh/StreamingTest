@@ -3,6 +3,8 @@ package com.example.administrator.streamingdemo.control.core.encoder;
 import android.os.Environment;
 import android.util.Log;
 
+import com.example.administrator.streamingdemo.model.utils.lib.sea.rtmp.io.RtmpConnection;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -25,9 +27,11 @@ public class H264ToFLV {
 
     final int MAX_BUFFER = 8 * 2014;
     private FileOutputStream out;
+    private RtmpConnection connection;
 
-    public H264ToFLV() {
+    public H264ToFLV(RtmpConnection rtmpConnection) {
         Log.d(TAG, "H264ToFLV init");
+        connection = rtmpConnection;
         try {
             out = new FileOutputStream(Environment.getExternalStorageDirectory() + "/out.flv");
         } catch (FileNotFoundException e) {
@@ -75,7 +79,8 @@ public class H264ToFLV {
 //							}
 //						}
 //					}
-                    out.write(out_buffer);
+//                    out.write(out_buffer);
+                    connection.publishVideoData(out_buffer);
                     out_buffer = null; //Clear buffer
                 }
                 p += size;
@@ -89,7 +94,7 @@ public class H264ToFLV {
     /****
      * Main Function
      ******/
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
 
         final int MAX_BUFFER = 8 * 2014;
 
@@ -153,7 +158,7 @@ public class H264ToFLV {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
     /*****
      * Queue process

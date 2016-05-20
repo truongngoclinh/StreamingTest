@@ -18,6 +18,7 @@ import com.example.administrator.streamingdemo.control.ui.activity.StreamingScre
 import com.example.administrator.streamingdemo.model.BasicInfo;
 import com.example.administrator.streamingdemo.model.StreamSettingInfo;
 import com.example.administrator.streamingdemo.model.utils.Constants;
+import com.example.administrator.streamingdemo.model.utils.lib.sea.StreamingCameraActivity2;
 
 /**
  * Created by linhtruong on 5/19/2016.
@@ -104,8 +105,10 @@ public class MoreSettingFragment extends DialogFragment implements CompoundButto
                 info.setRestriction(mChkRestriction.isChecked() ? 1 : 0);
 
                 if (info.getType() == Constants.STREAM_TYPE_CAMERA) {
-                    Intent i = new Intent(getActivity(), StreamingCameraActivity.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    Intent i = new Intent(getActivity(), StreamingCameraActivity2.class);
+                    // with ffmpeg
+                    //  Intent i = new Intent(getActivity(), StreamingCameraActivity.class);
+//                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
                 } else if (info.getType() == Constants.STREAM_TYPE_SCREEN) {
                     Intent i = new Intent(getActivity(), StreamingScreenActivity.class);
