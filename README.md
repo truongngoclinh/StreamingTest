@@ -1,4 +1,4 @@
-## ~DEPRECATED~ moving out to new repo [Ezstreaming] (https://github.com/truongngoclinh/ezstreaming)
+## ~~DEPRECATED~~ `moving out to new repo` [`Ezstreaming`] (https://github.com/truongngoclinh/ezstreaming)
 ### Streaming mobile android over rtmp
 ### Function
 * Streaming rear camera
